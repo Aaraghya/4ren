@@ -150,25 +150,28 @@ for i in range(12):
     )
 
 # ---------------- UI ----------------
-st.markdown('<div class="headline">good morning sunshine☀️</div>', unsafe_allow_html=True)
-
-st.markdown('<div class="envelope-wrapper">', unsafe_allow_html=True)
+st.markdown('<div class="headline">good morning sunshine</div>', unsafe_allow_html=True)
 
 if not st.session_state.opened:
-    if st.button("💌 open envelope"):
-        st.session_state.opened = True
+    col1, col2, col3 = st.columns([1, 1, 1])
+    with col2:
+        if st.button("💌 open envelope"):
+            st.session_state.opened = True
+            st.rerun()
 
     st.markdown("""
-        <div class="envelope">
-            <div class="flap"></div>
-            <div class="label">for ren 🌸</div>
+        <div class="envelope-wrapper">
+            <div class="envelope">
+                <div class="flap"></div>
+                <div class="label">for ren 🌸</div>
+            </div>
         </div>
     """, unsafe_allow_html=True)
 
 else:
-    # Safe audio (won’t crash if missing)
-    if os.path.exists("music.mp3.mp3"):
-        st.audio("music.mp3.mp3", loop=True)
+    # Safe audio (won't crash if missing)
+    if os.path.exists("music.mp3"):
+        st.audio("music.mp3", loop=True)
 
     st.markdown("""
         <div class="card">
@@ -184,5 +187,3 @@ else:
             </p>
         </div>
     """, unsafe_allow_html=True)
-
-st.markdown('</div>', unsafe_allow_html=True)
