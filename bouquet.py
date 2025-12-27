@@ -158,7 +158,7 @@ if not st.session_state.opened:
         if st.button("💌 open envelope"):
             st.session_state.opened = True
             st.rerun()
-
+    
     st.markdown("""
         <div class="envelope-wrapper">
             <div class="envelope">
