@@ -101,7 +101,7 @@ if not st.session_state.opened:
 
 else:
     # Music starts AFTER interaction
-    st.audio("music.mp3", loop=True)
+   # st.audio("music.mp3", loop=True)
 
     st.markdown("""
         <div class="card">
