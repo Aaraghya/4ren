@@ -207,7 +207,7 @@ else:
                 everything you do matters more than you know bae
                 im really glad i met you
                 <br><br>
-                thank you for being exactly who you are aryan 💛
+                thank you for being exactly who you are stupid btech boy💛
                 </p>
                 <div class="signature">
                 — love always, ru
