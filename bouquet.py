@@ -150,7 +150,7 @@ for i in range(12):
     )
 
 # ---------------- UI ----------------
-st.markdown('<div class="headline">good morning sunshine</div>', unsafe_allow_html=True)
+st.markdown('<div class="headline">good morning sunshine☀️</div>', unsafe_allow_html=True)
 
 if not st.session_state.opened:
     col1, col2, col3 = st.columns([1, 1, 1])
@@ -170,17 +170,16 @@ if not st.session_state.opened:
 
 else:
     # Safe audio (won't crash if missing)
-    if os.path.exists("music.mp3.mp3"):
-        st.audio("music.mp3.mp3", loop=True)
+    if os.path.exists("music.mp3"):
+        st.audio("music.mp3", loop=True)
 
     st.markdown("""
         <div class="card">
             <p style="font-size:1.35rem; line-height:1.6; font-family: Georgia, serif;">
-            I'm so grateful for you and everything you bring.
-            Your presence means the most to me, and the way you show up
-            for me doesn't go unnoticed.
+            i'm so grateful for you & everything u bring.
+            you make everything better just by being you. 
             <br><br>
-            Thank you for being exactly who you are, Aryan. 💛
+            thank you for all the little things aryan. 💕          
             </p>
             <p style="margin-top:20px; color:var(--text-color);">
             — love always, ru
