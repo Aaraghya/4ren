@@ -56,7 +56,9 @@ body {
 /* Envelope wrapper */
 .envelope-wrapper {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
 }
 
 /* Envelope */
@@ -66,7 +68,6 @@ body {
     background: var(--box-bg);
     border-radius: 16px;
     position: relative;
-    cursor: pointer;
     box-shadow: 0 20px 50px var(--box-shadow);
     overflow: hidden;
     transition: transform 0.4s ease;
@@ -122,21 +123,26 @@ body {
 .daisy {
     position: fixed;
     font-size: 2rem;
-    animation: float 8s linear infinite;
+    animation: float 6s linear infinite;
     opacity: 0.8;
     pointer-events: none;
 }
 
 @keyframes float {
     0% {
-        transform: translateY(110vh) translateX(0) rotate(0deg);
+        transform: translateY(100vh) translateX(0) rotate(0deg);
     }
     50% {
-        transform: translateY(50vh) translateX(30px) rotate(180deg);
+        transform: translateY(50vh) translateX(20px) rotate(180deg);
     }
     100% {
-        transform: translateY(-20vh) translateX(-30px) rotate(360deg);
+        transform: translateY(-10vh) translateX(-20px) rotate(360deg);
     }
+}
+
+/* Center button */
+div[data-testid="column"] button {
+    width: 100%;
 }
 
 </style>
@@ -149,9 +155,9 @@ if "opened" not in st.session_state:
 # ---------------- FLOATING DAISIES ----------------
 import random
 for i in range(15):
-    delay = random.uniform(0, 8)
-    left_pos = random.randint(0, 100)
-    duration = random.randint(6, 10)
+    delay = random.uniform(0, 3)
+    left_pos = random.randint(0, 95)
+    duration = random.randint(5, 8)
     st.markdown(
         f'<div class="daisy" style="left:{left_pos}%; animation-delay:{delay}s; animation-duration:{duration}s;">🌼</div>',
         unsafe_allow_html=True
@@ -161,12 +167,6 @@ for i in range(15):
 st.markdown('<div class="headline">good morning sunshine☀️</div>', unsafe_allow_html=True)
 
 if not st.session_state.opened:
-    col1, col2, col3 = st.columns([1, 1, 1])
-    with col2:
-        if st.button("💌 open envelope"):
-            st.session_state.opened = True
-            st.rerun()
-
     st.markdown("""
         <div class="envelope-wrapper">
             <div class="envelope">
@@ -175,6 +175,12 @@ if not st.session_state.opened:
             </div>
         </div>
     """, unsafe_allow_html=True)
+    
+    col1, col2, col3 = st.columns([1, 1, 1])
+    with col2:
+        if st.button("💌 open envelope"):
+            st.session_state.opened = True
+            st.rerun()
 
 else:
     # Safe audio (won't crash if missing)
