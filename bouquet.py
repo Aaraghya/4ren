@@ -12,15 +12,13 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-/* Light mode variables */
-@media (prefers-color-scheme: light) {
-    :root {
-        --background-color: #e6e6fa;
-        --text-color: #ff66cc;
-        --box-bg: #fff0f5;
-        --box-shadow: #ffcce6;
-        --box-text: #000000;
-    }
+/* Default (light mode) variables */
+:root {
+    --background-color: #e6e6fa;
+    --text-color: #ff66cc;
+    --box-bg: #fff0f5;
+    --box-shadow: #ffcce6;
+    --box-text: #000000;
 }
 
 /* Dark mode variables */
@@ -34,7 +32,8 @@ st.markdown("""
     }
 }
 
-body {
+/* Apply to Streamlit container */
+.stApp {
     background-color: var(--background-color);
 }
 
@@ -205,10 +204,10 @@ else:
             <div class="card">
                 <p style="font-size:1.35rem; line-height:1.6; font-family: Georgia, serif;">
                 you make everything feel lighter without even trying <3
-                evrything you do matters more than you know bae
+                everything you do matters more than you know bae
                 im really glad i met you
                 <br><br>
-                thank you for being exactly who you are, aryan. 💛
+                thank you for being exactly who you are aryan 💛
                 </p>
                 <div class="signature">
                 — love always, ru
