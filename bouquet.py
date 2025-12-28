@@ -1,6 +1,5 @@
 import streamlit as st
 import os
-import random
 
 st.set_page_config(
     page_title="for ren 🌸",
@@ -38,6 +37,13 @@ body {
     background-color: var(--background-color);
 }
 
+/* Center everything */
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Headline */
 .headline {
     text-align: center;
@@ -50,9 +56,7 @@ body {
 /* Envelope wrapper */
 .envelope-wrapper {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
+    justify-content: center;
 }
 
 /* Envelope */
@@ -62,8 +66,14 @@ body {
     background: var(--box-bg);
     border-radius: 16px;
     position: relative;
+    cursor: pointer;
     box-shadow: 0 20px 50px var(--box-shadow);
     overflow: hidden;
+    transition: transform 0.4s ease;
+}
+
+.envelope:hover {
+    transform: translateY(-6px);
 }
 
 /* Envelope flap */
@@ -81,6 +91,10 @@ body {
     z-index: 2;
 }
 
+.envelope.open .flap {
+    transform: rotateX(180deg);
+}
+
 /* Label */
 .label {
     position: absolute;
@@ -90,20 +104,6 @@ body {
     font-family: Georgia, serif;
     color: var(--text-color);
     font-size: 1.2rem;
-}
-
-/* Letter animation */
-.letter {
-    transform: translateY(120px);
-    opacity: 0;
-    animation: slideUp 1s ease forwards;
-}
-
-@keyframes slideUp {
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
 }
 
 /* Card */
@@ -118,41 +118,20 @@ body {
     color: var(--box-text);
 }
 
-/* Signature animation */
-.signature {
-    margin-top: 24px;
-    font-family: Georgia, serif;
-    font-size: 1.1rem;
-    color: var(--text-color);
-    opacity: 0;
-    animation: writeIn 2s ease forwards;
-    animation-delay: 1.2s;
-}
-
-@keyframes writeIn {
-    to {
-        opacity: 1;
-    }
-}
-
-/* Floating flowers */
-.flower {
+/* Floating daisies */
+.daisy {
     position: fixed;
     font-size: 1.8rem;
-    animation: float 6s linear infinite;
+    animation: float 12s linear infinite;
     opacity: 0.7;
-    pointer-events: none;
 }
 
 @keyframes float {
-    0% {
-        transform: translateY(100vh) translateX(0) rotate(0deg);
+    from {
+        transform: translateY(100vh) rotate(0deg);
     }
-    50% {
-        transform: translateY(50vh) translateX(20px) rotate(180deg);
-    }
-    100% {
-        transform: translateY(-10vh) translateX(-20px) rotate(360deg);
+    to {
+        transform: translateY(-10vh) rotate(360deg);
     }
 }
 
@@ -163,26 +142,23 @@ body {
 if "opened" not in st.session_state:
     st.session_state.opened = False
 
-if "music_on" not in st.session_state:
-    st.session_state.music_on = False
-
-# ---------------- FLOATING FLOWERS ----------------
-flowers = ["🌼", "🌸", "💮"]
-for _ in range(12):
-    left = random.randint(0, 95)
-    delay = random.uniform(0, 2)
-    duration = random.randint(5, 8)
-    emoji = random.choice(flowers)
-
+# ---------------- FLOATING DAISIES ----------------
+for i in range(12):
     st.markdown(
-        f'<div class="flower" style="left:{left}%; animation-delay:{delay}s; animation-duration:{duration}s;">{emoji}</div>',
+        f'<div class="daisy" style="left:{i*8}%; animation-delay:{i}s;">🌼</div>',
         unsafe_allow_html=True
     )
 
 # ---------------- UI ----------------
-st.markdown('<div class="headline">good morning sunshine ☀️</div>', unsafe_allow_html=True)
+st.markdown('<div class="headline">good morning sunshine</div>', unsafe_allow_html=True)
 
 if not st.session_state.opened:
+    col1, col2, col3 = st.columns([1, 1, 1])
+    with col2:
+        if st.button("💌 open envelope"):
+            st.session_state.opened = True
+            st.rerun()
+
     st.markdown("""
         <div class="envelope-wrapper">
             <div class="envelope">
@@ -192,38 +168,22 @@ if not st.session_state.opened:
         </div>
     """, unsafe_allow_html=True)
 
-    col1, col2, col3 = st.columns([1, 1, 1])
-    with col2:
-        if st.button("💌 open envelope"):
-            st.session_state.opened = True
-            st.session_state.music_on = True
-            st.rerun()
-
 else:
-    # Autoplay music after click
-    if os.path.exists("music.mp3") and st.session_state.music_on:
-        st.audio("music.mp3", loop=True, autoplay=True)
-
-    # Manual toggle centered
-    col1, col2, col3 = st.columns([1, 1, 1])
-    with col2:
-        if st.button("🎵 play / pause music"):
-            st.session_state.music_on = not st.session_state.music_on
-            st.rerun()
+    # Safe audio (won't crash if missing)
+    if os.path.exists("music.mp3"):
+        st.audio("music.mp3", loop=True)
 
     st.markdown("""
-        <div class="letter">
-            <div class="card">
-                <p style="font-size:1.35rem; line-height:1.6; font-family: Georgia, serif;">
-                i'm so grateful for you & everything you bring.
-                your presence means the most to me, and the way you show up
-                for me doesn't go unnoticed.
-                <br><br>
-                thank you for being exactly who you are, aryan. 💛
-                </p>
-                <div class="signature">
-                — love always, ru
-                </div>
-            </div>
+        <div class="card">
+            <p style="font-size:1.35rem; line-height:1.6; font-family: Georgia, serif;">
+            you make everything feel lighter without even trying.
+            everything you do matters more than you know.
+            i'm really glad i met you 
+            <br><br>
+            thank you for being exactly who you are, aryan 💛
+            </p>
+            <p style="margin-top:20px; color:var(--text-color);">
+            — love always, ru
+            </p>
         </div>
     """, unsafe_allow_html=True)
