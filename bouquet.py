@@ -66,7 +66,7 @@ body {
     overflow: hidden;
 }
 
-/* Flap */
+/* Envelope flap */
 .flap {
     position: absolute;
     top: 0;
@@ -81,10 +81,6 @@ body {
     z-index: 2;
 }
 
-.envelope.open .flap {
-    transform: rotateX(180deg);
-}
-
 /* Label */
 .label {
     position: absolute;
@@ -96,7 +92,7 @@ body {
     font-size: 1.2rem;
 }
 
-/* Letter sliding out */
+/* Letter animation */
 .letter {
     transform: translateY(120px);
     opacity: 0;
@@ -125,7 +121,7 @@ body {
 /* Signature animation */
 .signature {
     margin-top: 24px;
-    font-family: 'Georgia', serif;
+    font-family: Georgia, serif;
     font-size: 1.1rem;
     color: var(--text-color);
     opacity: 0;
@@ -160,15 +156,6 @@ body {
     }
 }
 
-/* Music toggle */
-.music-btn {
-    border: none;
-    background: transparent;
-    font-size: 1.5rem;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
 </style>
 """, unsafe_allow_html=True)
 
@@ -179,7 +166,7 @@ if "opened" not in st.session_state:
 if "music_on" not in st.session_state:
     st.session_state.music_on = False
 
-# ---------------- FLOATING FLOWERS (subtle + mixed) ----------------
+# ---------------- FLOATING FLOWERS ----------------
 flowers = ["🌼", "🌸", "💮"]
 for _ in range(12):
     left = random.randint(0, 95)
@@ -205,22 +192,24 @@ if not st.session_state.opened:
         </div>
     """, unsafe_allow_html=True)
 
-    col1, col2, col3 = st.columns([1,1,1])
+    col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
         if st.button("💌 open envelope"):
             st.session_state.opened = True
+            st.session_state.music_on = True
             st.rerun()
 
 else:
-    # Music toggle
-    col1, col2, col3 = st.columns([1,1,1])
+    # Autoplay music after click
+    if os.path.exists("music.mp3") and st.session_state.music_on:
+        st.audio("music.mp3", loop=True, autoplay=True)
+
+    # Manual toggle centered
+    col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
         if st.button("🎵 play / pause music"):
             st.session_state.music_on = not st.session_state.music_on
             st.rerun()
-    
-    if os.path.exists("music.mp3") and st.session_state.music_on:
-        st.audio("music.mp3", loop=True, autoplay=True)
 
     st.markdown("""
         <div class="letter">
