@@ -158,7 +158,7 @@ if not st.session_state.opened:
         if st.button("💌 open envelope"):
             st.session_state.opened = True
             st.rerun()
-    
+
     st.markdown("""
         <div class="envelope-wrapper">
             <div class="envelope">
@@ -170,8 +170,8 @@ if not st.session_state.opened:
 
 else:
     # Safe audio (won't crash if missing)
-    if os.path.exists("music.mp3"):
-        st.audio("music.mp3", loop=True)
+    if os.path.exists("music.mp3.mp3"):
+        st.audio("music.mp3.mp3", loop=True)
 
     st.markdown("""
         <div class="card">
