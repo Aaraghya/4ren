@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import random
 
 st.set_page_config(
     page_title="for ren 🌸",
@@ -37,13 +38,6 @@ body {
     background-color: var(--background-color);
 }
 
-/* Center everything */
-.main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 /* Headline */
 .headline {
     text-align: center;
@@ -70,14 +64,9 @@ body {
     position: relative;
     box-shadow: 0 20px 50px var(--box-shadow);
     overflow: hidden;
-    transition: transform 0.4s ease;
 }
 
-.envelope:hover {
-    transform: translateY(-6px);
-}
-
-/* Envelope flap */
+/* Flap */
 .flap {
     position: absolute;
     top: 0;
@@ -107,6 +96,20 @@ body {
     font-size: 1.2rem;
 }
 
+/* Letter sliding out */
+.letter {
+    transform: translateY(120px);
+    opacity: 0;
+    animation: slideUp 1s ease forwards;
+}
+
+@keyframes slideUp {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 /* Card */
 .card {
     background: var(--box-bg);
@@ -119,12 +122,29 @@ body {
     color: var(--box-text);
 }
 
-/* Floating daisies */
-.daisy {
+/* Signature animation */
+.signature {
+    margin-top: 24px;
+    font-family: 'Georgia', serif;
+    font-size: 1.1rem;
+    color: var(--text-color);
+    opacity: 0;
+    animation: writeIn 2s ease forwards;
+    animation-delay: 1.2s;
+}
+
+@keyframes writeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Floating flowers */
+.flower {
     position: fixed;
-    font-size: 2rem;
+    font-size: 1.8rem;
     animation: float 6s linear infinite;
-    opacity: 0.8;
+    opacity: 0.7;
     pointer-events: none;
 }
 
@@ -140,9 +160,13 @@ body {
     }
 }
 
-/* Center button */
-div[data-testid="column"] button {
-    width: 100%;
+/* Music toggle */
+.music-btn {
+    border: none;
+    background: transparent;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
 </style>
@@ -152,19 +176,24 @@ div[data-testid="column"] button {
 if "opened" not in st.session_state:
     st.session_state.opened = False
 
-# ---------------- FLOATING DAISIES ----------------
-import random
-for i in range(15):
-    delay = random.uniform(0, 3)
-    left_pos = random.randint(0, 95)
+if "music_on" not in st.session_state:
+    st.session_state.music_on = False
+
+# ---------------- FLOATING FLOWERS (subtle + mixed) ----------------
+flowers = ["🌼", "🌸", "💮"]
+for _ in range(12):
+    left = random.randint(0, 95)
+    delay = random.uniform(0, 2)
     duration = random.randint(5, 8)
+    emoji = random.choice(flowers)
+
     st.markdown(
-        f'<div class="daisy" style="left:{left_pos}%; animation-delay:{delay}s; animation-duration:{duration}s;">🌼</div>',
+        f'<div class="flower" style="left:{left}%; animation-delay:{delay}s; animation-duration:{duration}s;">{emoji}</div>',
         unsafe_allow_html=True
     )
 
 # ---------------- UI ----------------
-st.markdown('<div class="headline">good morning sunshine☀️</div>', unsafe_allow_html=True)
+st.markdown('<div class="headline">good morning sunshine ☀️</div>', unsafe_allow_html=True)
 
 if not st.session_state.opened:
     st.markdown("""
@@ -175,28 +204,37 @@ if not st.session_state.opened:
             </div>
         </div>
     """, unsafe_allow_html=True)
-    
-    col1, col2, col3 = st.columns([1, 1, 1])
+
+    col1, col2, col3 = st.columns([1,1,1])
     with col2:
         if st.button("💌 open envelope"):
             st.session_state.opened = True
             st.rerun()
 
 else:
-    # Safe audio (won't crash if missing)
-    if os.path.exists("music.mp3"):
-        st.audio("music.mp3", loop=True)
+    # Music toggle
+    col1, col2, col3 = st.columns([1,1,1])
+    with col2:
+        if st.button("🎵 play / pause music"):
+            st.session_state.music_on = not st.session_state.music_on
+            st.rerun()
+    
+    if os.path.exists("music.mp3") and st.session_state.music_on:
+        st.audio("music.mp3", loop=True, autoplay=True)
 
     st.markdown("""
-        <div class="card">
-            <p style="font-size:1.35rem; line-height:1.6; font-family: Georgia, serif;">
-            i'm so grateful for you & everything u bring.
-            you make everything better just by being you. 
-            <br><br>
-            thank you for all the little things aryan. 💕          
-            </p>
-            <p style="margin-top:20px; color:var(--text-color);">
-            — love always, ru
-            </p>
+        <div class="letter">
+            <div class="card">
+                <p style="font-size:1.35rem; line-height:1.6; font-family: Georgia, serif;">
+                i'm so grateful for you & everything you bring.
+                your presence means the most to me, and the way you show up
+                for me doesn't go unnoticed.
+                <br><br>
+                thank you for being exactly who you are, aryan. 💛
+                </p>
+                <div class="signature">
+                — love always, ru
+                </div>
+            </div>
         </div>
     """, unsafe_allow_html=True)
