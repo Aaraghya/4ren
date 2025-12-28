@@ -121,17 +121,21 @@ body {
 /* Floating daisies */
 .daisy {
     position: fixed;
-    font-size: 1.8rem;
-    animation: float 12s linear infinite;
-    opacity: 0.7;
+    font-size: 2rem;
+    animation: float 8s linear infinite;
+    opacity: 0.8;
+    pointer-events: none;
 }
 
 @keyframes float {
-    from {
-        transform: translateY(100vh) rotate(0deg);
+    0% {
+        transform: translateY(110vh) translateX(0) rotate(0deg);
     }
-    to {
-        transform: translateY(-10vh) rotate(360deg);
+    50% {
+        transform: translateY(50vh) translateX(30px) rotate(180deg);
+    }
+    100% {
+        transform: translateY(-20vh) translateX(-30px) rotate(360deg);
     }
 }
 
@@ -143,9 +147,13 @@ if "opened" not in st.session_state:
     st.session_state.opened = False
 
 # ---------------- FLOATING DAISIES ----------------
-for i in range(12):
+import random
+for i in range(15):
+    delay = random.uniform(0, 8)
+    left_pos = random.randint(0, 100)
+    duration = random.randint(6, 10)
     st.markdown(
-        f'<div class="daisy" style="left:{i*8}%; animation-delay:{i}s;">🌼</div>',
+        f'<div class="daisy" style="left:{left_pos}%; animation-delay:{delay}s; animation-duration:{duration}s;">🌼</div>',
         unsafe_allow_html=True
     )
 
