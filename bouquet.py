@@ -204,8 +204,8 @@ else:
         <div class="letter">
             <div class="card">
                 <p style="font-size:1.35rem; line-height:1.6; font-family: Georgia, serif;">
-                you make everything feel lighter without even trying. 
-                evrything you do matter more than you know.
+                you make everything feel lighter without even trying <3
+                evrything you do matters more than you know bae
                 im really glad i met you
                 <br><br>
                 thank you for being exactly who you are, aryan. 💛
