@@ -8,7 +8,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# ---------------- CSS ----------------
+
 st.markdown("""
 <style>
 
@@ -32,7 +32,7 @@ st.markdown("""
     }
 }
 
-/* Apply to Streamlit container */
+
 .stApp {
     background-color: var(--background-color);
 }
@@ -175,7 +175,7 @@ for _ in range(12):
         unsafe_allow_html=True
     )
 
-# ---------------- UI ----------------
+
 st.markdown('<div class="headline">good morning sunshine ☀️</div>', unsafe_allow_html=True)
 
 if not st.session_state.opened:
@@ -195,7 +195,7 @@ if not st.session_state.opened:
             st.rerun()
 
 else:
-    # Autoplay music when envelope is opened
+    
     if os.path.exists("music.mp3"):
         st.audio("music.mp3", loop=True, autoplay=True)
 
